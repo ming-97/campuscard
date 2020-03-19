@@ -7,7 +7,7 @@ public class Card {
 
     private String payPwd;
 
-    private Integer uid;
+    private Integer userNumber;
 
     private String status;
 
@@ -35,12 +35,12 @@ public class Card {
         this.payPwd = payPwd == null ? null : payPwd.trim();
     }
 
-    public Integer getUid() {
-        return uid;
+    public Integer getUserNumber() {
+        return userNumber;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setUserNumber(Integer userNumber) {
+        this.userNumber = userNumber;
     }
 
     public String getStatus() {
@@ -82,4 +82,29 @@ public class Card {
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
+
+	public Card(String payPwd, Integer userNumber, String status, Double balance, Date createTime,
+			Date updateTime, Boolean deleteFlag) {
+		this.payPwd = payPwd;
+		this.userNumber = userNumber;
+		this.status = status;
+		this.balance = balance;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.deleteFlag = deleteFlag;
+	}
+
+	public Card() {
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Card [id=" + id + ", payPwd=" + payPwd + ", userNumber=" + userNumber + ", status=" + status
+				+ ", balance=" + balance + ", createTime=" + createTime + ", updateTime=" + updateTime + ", deleteFlag="
+				+ deleteFlag + "]";
+	}
+    
+	
+    
 }

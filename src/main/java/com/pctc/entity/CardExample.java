@@ -262,63 +262,63 @@ public class CardExample {
             return (Criteria) this;
         }
 
-        public Criteria andUidIsNull() {
-            addCriterion("uid is null");
+        public Criteria andUserNumberIsNull() {
+            addCriterion("user_number is null");
             return (Criteria) this;
         }
 
-        public Criteria andUidIsNotNull() {
-            addCriterion("uid is not null");
+        public Criteria andUserNumberIsNotNull() {
+            addCriterion("user_number is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUidEqualTo(Integer value) {
-            addCriterion("uid =", value, "uid");
+        public Criteria andUserNumberEqualTo(Integer value) {
+            addCriterion("user_number =", value, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidNotEqualTo(Integer value) {
-            addCriterion("uid <>", value, "uid");
+        public Criteria andUserNumberNotEqualTo(Integer value) {
+            addCriterion("user_number <>", value, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidGreaterThan(Integer value) {
-            addCriterion("uid >", value, "uid");
+        public Criteria andUserNumberGreaterThan(Integer value) {
+            addCriterion("user_number >", value, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("uid >=", value, "uid");
+        public Criteria andUserNumberGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_number >=", value, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidLessThan(Integer value) {
-            addCriterion("uid <", value, "uid");
+        public Criteria andUserNumberLessThan(Integer value) {
+            addCriterion("user_number <", value, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidLessThanOrEqualTo(Integer value) {
-            addCriterion("uid <=", value, "uid");
+        public Criteria andUserNumberLessThanOrEqualTo(Integer value) {
+            addCriterion("user_number <=", value, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidIn(List<Integer> values) {
-            addCriterion("uid in", values, "uid");
+        public Criteria andUserNumberIn(List<Integer> values) {
+            addCriterion("user_number in", values, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidNotIn(List<Integer> values) {
-            addCriterion("uid not in", values, "uid");
+        public Criteria andUserNumberNotIn(List<Integer> values) {
+            addCriterion("user_number not in", values, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidBetween(Integer value1, Integer value2) {
-            addCriterion("uid between", value1, value2, "uid");
+        public Criteria andUserNumberBetween(Integer value1, Integer value2) {
+            addCriterion("user_number between", value1, value2, "userNumber");
             return (Criteria) this;
         }
 
-        public Criteria andUidNotBetween(Integer value1, Integer value2) {
-            addCriterion("uid not between", value1, value2, "uid");
+        public Criteria andUserNumberNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_number not between", value1, value2, "userNumber");
             return (Criteria) this;
         }
 

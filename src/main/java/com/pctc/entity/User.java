@@ -105,7 +105,7 @@ public class User {
 
 	public User(String username, Integer userNumber, String sex, String idNumber, String password, String email,
 			Date createTime, Date updateTime, Boolean deleteFlag) {
-		super();
+
 		this.username = username;
 		this.userNumber = userNumber;
 		this.sex = sex;
@@ -118,7 +118,7 @@ public class User {
 	}
 
 	public User() {
-		
+
 	}
 
 	@Override
@@ -127,8 +127,6 @@ public class User {
 				+ ", idNumber=" + idNumber + ", password=" + password + ", email=" + email + ", createTime="
 				+ createTime + ", updateTime=" + updateTime + ", deleteFlag=" + deleteFlag + "]";
 	}
-	
-	
     
     
 }

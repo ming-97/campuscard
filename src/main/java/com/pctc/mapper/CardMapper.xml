@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.pctc.entity.Card" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="pay_pwd" property="payPwd" jdbcType="VARCHAR" />
-    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="user_number" property="userNumber" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
     <result column="create_time" property="createTime" jdbcType="DATE" />
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, pay_pwd, uid, status, balance, create_time, update_time, delete_flag
+    id, pay_pwd, user_number, status, balance, create_time, update_time, delete_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pctc.entity.CardExample" >
     select
@@ -103,10 +103,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.pctc.entity.Card" >
-    insert into card (id, pay_pwd, uid, 
+    insert into card (id, pay_pwd, user_number, 
       status, balance, create_time, 
       update_time, delete_flag)
-    values (#{id,jdbcType=INTEGER}, #{payPwd,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{payPwd,jdbcType=VARCHAR}, #{userNumber,jdbcType=INTEGER}, 
       #{status,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{createTime,jdbcType=DATE}, 
       #{updateTime,jdbcType=DATE}, #{deleteFlag,jdbcType=BIT})
   </insert>
@@ -119,8 +119,8 @@
       <if test="payPwd != null" >
         pay_pwd,
       </if>
-      <if test="uid != null" >
-        uid,
+      <if test="userNumber != null" >
+        user_number,
       </if>
       <if test="status != null" >
         status,
@@ -145,8 +145,8 @@
       <if test="payPwd != null" >
         #{payPwd,jdbcType=VARCHAR},
       </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=INTEGER},
+      <if test="userNumber != null" >
+        #{userNumber,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
@@ -180,8 +180,8 @@
       <if test="record.payPwd != null" >
         pay_pwd = #{record.payPwd,jdbcType=VARCHAR},
       </if>
-      <if test="record.uid != null" >
-        uid = #{record.uid,jdbcType=INTEGER},
+      <if test="record.userNumber != null" >
+        user_number = #{record.userNumber,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=VARCHAR},
@@ -207,7 +207,7 @@
     update card
     set id = #{record.id,jdbcType=INTEGER},
       pay_pwd = #{record.payPwd,jdbcType=VARCHAR},
-      uid = #{record.uid,jdbcType=INTEGER},
+      user_number = #{record.userNumber,jdbcType=INTEGER},
       status = #{record.status,jdbcType=VARCHAR},
       balance = #{record.balance,jdbcType=DOUBLE},
       create_time = #{record.createTime,jdbcType=DATE},
@@ -223,8 +223,8 @@
       <if test="payPwd != null" >
         pay_pwd = #{payPwd,jdbcType=VARCHAR},
       </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=INTEGER},
+      <if test="userNumber != null" >
+        user_number = #{userNumber,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
@@ -247,7 +247,7 @@
   <update id="updateByPrimaryKey" parameterType="com.pctc.entity.Card" >
     update card
     set pay_pwd = #{payPwd,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=INTEGER},
+      user_number = #{userNumber,jdbcType=INTEGER},
       status = #{status,jdbcType=VARCHAR},
       balance = #{balance,jdbcType=DOUBLE},
       create_time = #{createTime,jdbcType=DATE},

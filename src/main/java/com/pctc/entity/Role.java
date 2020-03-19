@@ -62,4 +62,26 @@ public class Role {
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
+
+	public Role(String name, String description, Date createTime, Date updateTime, Boolean deleteFlag) {
+
+		this.name = name;
+		this.description = description;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.deleteFlag = deleteFlag;
+	}
+
+	public Role() {
+
+	}
+
+	@Override
+	public String toString() {
+		return "Role [rid=" + rid + ", name=" + name + ", description=" + description + ", createTime=" + createTime
+				+ ", updateTime=" + updateTime + ", deleteFlag=" + deleteFlag + "]";
+	}
+    
+	
+    
 }

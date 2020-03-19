@@ -89,6 +89,12 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByUserNumber" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select
+  	<include refid="Base_Column_List" />
+    from user
+    where user_number = #{userNumber,jdbcType=INTEGER} and delete_flag=false
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

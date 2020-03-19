@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pctc.entity.User;
 import com.pctc.entity.UserExample;
+import com.pctc.entity.UserExample.Criteria;
 import com.pctc.mapper.UserMapper;
 import com.pctc.service.UserService;
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService{
 	public User getUserByUserNumber(Integer userNumber) {
 		User user=null;
 		if (userNumber!=null) {
-			
+			user=userMapper.selectByUserNumber(userNumber);	
 		}
 		return user;
 	}
