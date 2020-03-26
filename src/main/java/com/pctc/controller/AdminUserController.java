@@ -15,16 +15,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pctc.entity.Role;
+import com.pctc.entity.RoleExample;
 import com.pctc.entity.User;
 import com.pctc.entity.UserExample;
 import com.pctc.entity.UserExample.Criteria;
+import com.pctc.entity.UserRole;
+import com.pctc.service.RoleService;
+import com.pctc.service.UserRoleService;
 import com.pctc.service.UserService;
 
 @Controller
-public class UserController {
+public class AdminUserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
+	@Autowired
+	private UserRoleService userRoleService;
 
 	//查询所有用户
 	@RequestMapping("userList")
@@ -59,23 +68,29 @@ public class UserController {
 	}
 
 	@RequestMapping("toUserAdd")
-	public String toUserAdd() {
+	public String toUserAdd(Map<String, Object> map) {
+		RoleExample roleExample=null;
+		List<Role> roles=roleService.getRoles(roleExample);
+		map.put("roles", roles);
 		return "user/user-add";
 	}
 
 	//添加用户
 	@ResponseBody
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public boolean addUser(User user) {
+	public boolean addUser(User user,String roleName) {
 		boolean flag = false;
 		User user2=userService.getUserByUserNumber(user.getUserNumber());
 		if (user2!=null) {
 			flag = true;
-		} else {
+		} else {	
 			user.setCreateTime(new Date());
 			user.setUpdateTime(null);
 			user.setDeleteFlag(false);
 			userService.addUser(user);
+			
+			UserRole userRole=new UserRole(userService.getUserByUserNumber(user.getUserNumber()).getUid(), roleService.getRole(roleName).getRid(), new Date(), null, false);	
+			userRoleService.add(userRole);
 		}
 		return flag;
 	}
@@ -119,6 +134,7 @@ public class UserController {
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public boolean deleteUser(Integer uid) {
 		userService.deleteUser(uid);
+		userRoleService.deleteByUser(uid);
 		return true;
 	}
 

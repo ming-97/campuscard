@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService{
 		List<User> users=userMapper.selectByExample(userExample);
 		return users;
 	}
-
 	
 	public int addUser(User user) {
 		int count=0;
@@ -51,19 +50,11 @@ public class UserServiceImpl implements UserService{
 		}
 		return user;
 	}
-
-	
-	public User getUserByUserName(String userName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	public int updateUser(User user) {
 		
 		return userMapper.updateByPrimaryKey(user);
 	}
-
 	
 	public int deleteUser(int uid) {
 		int count=0;

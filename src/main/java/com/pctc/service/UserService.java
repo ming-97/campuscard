@@ -14,8 +14,6 @@ public interface UserService {
 	public User getUserByUid(Integer uid);
 	
 	public User getUserByUserNumber(Integer userNumber);
-
-	public User getUserByUserName(String userName);
 	
 	public int updateUser(User user);
 	

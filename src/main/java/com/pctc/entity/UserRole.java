@@ -62,4 +62,19 @@ public class UserRole {
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
+
+	public UserRole(Integer uid, Integer rid, Date createTime, Date updateTime, Boolean deleteFlag) {
+	
+		this.uid = uid;
+		this.rid = rid;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.deleteFlag = deleteFlag;
+	}
+
+	public UserRole() {
+		
+	}
+    
+    
 }

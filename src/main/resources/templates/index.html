@@ -22,33 +22,19 @@
 <body>
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">H-ui.admin</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> 
-			<span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span> 
-			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
-			<nav class="nav navbar-nav">
-				<ul class="cl">
-					<li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
-						<ul class="dropDown-menu menu radius box-shadow">
-							<li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
-							<li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-							<li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
-							<li><a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" >校园一卡通系统</a>  
+							
+		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+			<ul class="cl" th:if="${session!=null}">
+				<li>您好！</li>	
+				<li class="dropDown dropDown_hover">
+					<a th:text="${session.user.username}" href="#" class="dropDown_A"> <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<ul class="dropDown-menu menu radius box-shadow">
+						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>					
+						<li><a href="doLogout">退出</a></li>
 					</ul>
 				</li>
-			</ul>
-		</nav>
-		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
-			<ul class="cl">
-				<li>超级管理员</li>
-				<li class="dropDown dropDown_hover">
-					<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
-					<ul class="dropDown-menu menu radius box-shadow">
-						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
-				</ul>
-			</li>
-				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
+				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger"></span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
 				<li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
@@ -66,12 +52,22 @@
 </header>
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
+	
+		<dl id="menu-article">
+			<dt><i class="Hui-iconfont">&#xe60d;</i> 用户中心<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="toMyInfo" data-title="个人信息" href="javascript:void(0)">个人信息</a></li>
+				</ul>
+			</dd>
+		</dl>
+		
 		<dl id="menu-article">
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 人员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a data-href="userList" data-title="人员列表" href="javascript:void(0)">人员列表</a></li>
-					<li><a data-href="" data-title="人员类别" href="javascript:void(0)">人员类别</a></li>
+					<li><a data-href="roleList" data-title="人员类别" href="javascript:void(0)">人员类别</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -80,10 +76,9 @@
 			<dt><i class="Hui-iconfont">&#xe6b4;</i> 一卡通管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="cardList" data-title="一卡通列表" href="javascript:void(0)">一卡通列表</a></li>
-					<li><a data-href="" data-title="办卡管理" href="javascript:void(0)">办卡管理</a></li>
-					<li><a data-href="" data-title="充值管理" href="javascript:void(0)">充值管理</a></li>
-					<li><a data-href="" data-title="挂失管理" href="javascript:void(0)">挂失管理</a></li>
+					<li><a data-href="cardList" data-title="一卡通列表" href="javascript:void(0)">一卡通列表</a></li>				
+					<li><a data-href="" data-title="充值" href="javascript:void(0)">充值</a></li>
+					<li><a data-href="" data-title="挂失" href="javascript:void(0)">挂失</a></li>
 				</ul>
 			</dd>
 		</dl>

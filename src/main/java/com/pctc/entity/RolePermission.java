@@ -62,4 +62,18 @@ public class RolePermission {
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
+
+	public RolePermission(Integer rid, Integer pid, Date createTime, Date updateTime, Boolean deleteFlag) {
+		this.rid = rid;
+		this.pid = pid;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.deleteFlag = deleteFlag;
+	}
+
+	public RolePermission() {
+
+	}
+    
+    
 }

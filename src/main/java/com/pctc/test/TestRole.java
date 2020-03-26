@@ -38,4 +38,14 @@ public class TestRole {
 	public void delete() {
 		System.out.println(roleService.deleteRole(1));
 	}
+	
+	@Test
+	public void listRoleNames() {
+		System.out.println(roleService.listRoleNames(11));
+	}
+	
+	@Test
+	public void getRoles() {
+		System.out.println(roleService.getRoles(888888));
+	}
 }

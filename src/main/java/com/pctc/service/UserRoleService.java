@@ -10,5 +10,7 @@ public interface UserRoleService {
 	
 	public int update(UserRole userRole);
 	
-	public int delete(Integer id);
+	public void deleteByUser(Integer uid);
+	
+	public void deleteByRole(Integer rid);
 }

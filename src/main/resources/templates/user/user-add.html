@@ -51,6 +51,14 @@
 		</div>
 	</div>
 	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>人员类别：</label>
+		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+			<select class="select" name="roleName" id="roleName" size="1">
+				<option  th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}"></option>
+			</select>
+			</span> </div>
+	</div>
+	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登录密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
 			<input type="password" class="input-text" autocomplete="off" placeholder="密码" id="password" name="password">
@@ -112,6 +120,9 @@ $(function(){
 			userNumber:{
 				required:true,
 				isInteger:true
+			},
+			roleName:{
+				required:true
 			},
 			password:{
 				required:true,
