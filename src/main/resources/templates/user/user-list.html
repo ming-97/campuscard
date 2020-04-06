@@ -16,14 +16,20 @@
 <title>用户管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 人员管理 <span class="c-gray en">&gt;</span> 人员列表</nav>
 <div class="page-container">
   <form action="selectUser" method="post">
 	<div class="text-c"> 注册时间范围：
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" name="datemin" class="input-text Wdate" style="width:120px;" autocomplete="off">
 		-
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" name="datemax" class="input-text Wdate" style="width:120px;" autocomplete="off">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入学/工号" id="" name="userNumber">
+		<input type="text" class="input-text" style="width:200px" placeholder="输入学/工号" id="" name="userNumber">
+		<select name="roleName" style="width:100px" class="input-text" >
+				<option value="" selected>人员类别</option>
+				<option  th:each="role : ${roles}" 
+						th:value="${role.name}" th:text="${role.name}">
+				</option>	
+		</select>
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 	</div>
    </form>

@@ -10,11 +10,11 @@
 <link rel="Bookmark" href="/favicon.ico" >
 <link rel="Shortcut Icon" href="/favicon.ico" />
 
-<link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="../h-ui.admin/css/style.css" />
 
 <!--/meta 作为公共模版分离出去-->
 
@@ -29,53 +29,58 @@
 	<input type="hidden" name="id" th:value="${id}" />
 	
 	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>原密码：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="password" class="input-text" autocomplete="off" placeholder="原密码"  name="oldPayPwd">
+		</div>
+	</div>
+	
+	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" placeholder="新密码" id="payPwd" name="payPwd">
+			<input type="password" class="input-text" autocomplete="off" placeholder="新密码" id="newPayPwd" name="newPayPwd">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认新密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="payPwd2" name="payPwd2">
+			<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" name="newPayPwd2">
 		</div>
 	</div>
 	
 	<div class="row cl">
 		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;确定&nbsp;&nbsp;">
 		</div>
 	</div>
 	</form>
 </article>
 
 <!--_footer 作为公共模版分离出去--> 
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script> 
-<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="../h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/messages_zh.js"></script> 
 <script type="text/javascript">
 $(function(){
-	$('.skin-minimal input').iCheck({
-		checkboxClass: 'icheckbox-blue',
-		radioClass: 'iradio-blue',
-		increaseArea: '20%'
-	});
 	
 	$("#form-admin-add").validate({
 		rules:{
-			payPwd:{
+			oldPayPwd:{
+				required:true,
+			},
+			newPayPwd:{
 				required:true,
 				minlength:6
 			},
-			payPwd2:{
+			newPayPwd2:{
 				required:true,
-				equalTo: "#payPwd"
+				equalTo: "#newPayPwd"
 			},
 					
 		},
@@ -88,10 +93,14 @@ $(function(){
 				url: "changePayPwd",
 				dateType:"json",
 				success: function(data){				
+					if(data == true){
 						var index = parent.layer.getFrameIndex(window.name);
 						parent.layer.msg('修改成功!',{icon:6,time:1000},function(){
 							parent.location.reload();
-						});										
+						});					
+					}else{					
+						layer.msg('原密码错误，请重新输入!',{icon:5,time:1000});
+					} 									
 				},
                 error: function(errordata){
 					layer.msg('修改失败!',{icon:2,time:1000});

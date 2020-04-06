@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -64,6 +67,26 @@ public class CardController {
 		map.put("cards", cards);
 		return "card/card-list";
 	}
+	
+	@RequestMapping("cardInfo")
+	public String cardInfo(Map<String, Object> map) {
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		User user = (User) session.getAttribute("user");
+
+		CardExample cardExample = new CardExample();
+		Criteria criteria = cardExample.createCriteria();
+		criteria.andUserNumberEqualTo(user.getUserNumber());
+		criteria.andDeleteFlagEqualTo(false);
+		List<Card> cards = cardService.getCards(cardExample);
+		if (!cards.isEmpty()) {
+			map.put("card", cards.get(0));
+		} else {
+			Card card = new Card();
+			map.put("card", card);
+		}
+		return "card/card-info";
+	}
 
 	@RequestMapping("toAddCard")
 	public String toAddCard() {
@@ -73,30 +96,56 @@ public class CardController {
 	//办卡
 	@ResponseBody
 	@RequestMapping(value = "/addCard", method = RequestMethod.POST)
-	public boolean addCard(Card card) {
-		boolean flag = false;
+	public String addCard(Card card) {
 		User user = userService.getUserByUserNumber(card.getUserNumber());
 		if (user != null) {
-			card.setPayPwd(user.getIdNumber().substring(12));
-			card.setCreateTime(new Date());
-			card.setUpdateTime(null);
-			card.setStatus("正常");
-			card.setDeleteFlag(false);
-			cardService.add(card);
+			CardExample example=new CardExample();
+			Criteria criteria=example.createCriteria();
+			criteria.andUserNumberEqualTo(user.getUserNumber());
+			criteria.andDeleteFlagEqualTo(false);
+			List<Card> cards=cardService.getCards(example);
+			if (cards.isEmpty()) {
+				card.setPayPwd(user.getIdNumber().substring(12));
+				card.setCreateTime(new Date());
+				card.setUpdateTime(null);
+				card.setStatus("正常");
+				card.setDeleteFlag(false);
+				cardService.add(card);
+				return "1";
+			}
+			return "2";
 		} else {
-			flag = true;
+			return "0";
 		}
-		return flag;
+		
+	}
+	
+	@RequestMapping("toStopCard")
+	public String toStopCard() {
+
+		return "card/card-stop";
 	}
 
 	//卡挂失
 	@ResponseBody
 	@RequestMapping("stopCard")
-	public boolean stopCard(@RequestParam(value = "id") Integer id) {
-		Card card = cardService.getCard(id);
-		card.setStatus("挂失");
-		cardService.update(card);
-		return true;
+	public String stopCard(Integer userNumber) {
+		CardExample cardExample = new CardExample();
+		Criteria criteria = cardExample.createCriteria();
+		criteria.andUserNumberEqualTo(userNumber);
+		criteria.andDeleteFlagEqualTo(false);
+		List<Card> cards = cardService.getCards(cardExample);
+		if (!cards.isEmpty()) {
+			for (Card card : cards) {
+				if ("正常".equals(card.getStatus())) {
+					card.setStatus("挂失");
+					cardService.update(card);
+					return "1";
+				}
+			}
+			return "2";
+		}
+		return "0";
 	}
 
 	//卡解挂
@@ -109,20 +158,40 @@ public class CardController {
 		return true;
 	}
 
-	@RequestMapping("toRecharge")
+	/*@RequestMapping("toRecharge")
 	public String toRecharge(@RequestParam(value = "id") Integer id, Map<String, Object> map) {
 		map.put("id", id);
+		return "card/card-recharge";
+	}*/
+	
+	@RequestMapping("toRecharge")
+	public String toRecharge() {
+		
 		return "card/card-recharge";
 	}
 
 	//卡充值
 	@ResponseBody
 	@RequestMapping(value = "rechargeCard", method = RequestMethod.POST)
-	public boolean rechargeCard(Integer id, Integer money) {
-		Card card = cardService.getCard(id);
-		card.setBalance(card.getBalance() + money);
-		cardService.update(card);
-		return true;
+	public String rechargeCard(Integer userNumber, Integer money) {
+		CardExample example=new CardExample();
+		Criteria criteria=example.createCriteria();
+		criteria.andUserNumberEqualTo(userNumber);
+		criteria.andDeleteFlagEqualTo(false);
+		List<Card> cards=cardService.getCards(example);
+		if (!cards.isEmpty()) {
+			Card card=cards.get(0);
+			if (card.getStatus().equals("正常")) {
+				card.setBalance(card.getBalance() + money);
+				cardService.update(card);
+				return "1";
+			}else {
+				return "2";
+			}
+		}else {
+			return "0";
+		}
+		
 	}
 	
 	@RequestMapping("toChangePayPwd")
@@ -134,12 +203,15 @@ public class CardController {
 	//修改支付密码
 	@ResponseBody
 	@RequestMapping(value = "changePayPwd", method = RequestMethod.POST)
-	public boolean changePayPwd(Integer id,String payPwd) {
+	public boolean changePayPwd(Integer id, String oldPayPwd,String newPayPwd) {
 		Card card = cardService.getCard(id);
-		card.setPayPwd(payPwd);
-		card.setUpdateTime(new Date());
-		cardService.update(card);
-		return true;
+		if (oldPayPwd.equals(card.getPayPwd())) {
+			card.setPayPwd(newPayPwd);
+			card.setUpdateTime(new Date());
+			cardService.update(card);
+			return true;
+		}	
+		return false;
 	}
 	
 	//删除卡

@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -15,18 +16,18 @@
 <link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
 
-<title>H-ui.admin v3.1</title>
+<title>校园一卡通管理系统</title>
 <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
 <body>
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" >校园一卡通系统</a>  
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" >校园一卡通管理系统</a>  
 							
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl" th:if="${session!=null}">
-				<li>您好！</li>	
+				<li>欢迎您:</li>	
 				<li class="dropDown dropDown_hover">
 					<a th:text="${session.user.username}" href="#" class="dropDown_A"> <i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
@@ -57,39 +58,44 @@
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 用户中心<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="toMyInfo" data-title="个人信息" href="javascript:void(0)">个人信息</a></li>
+					<li><a data-href="user/toMyInfo" data-title="个人信息" href="javascript:void(0)">个人信息</a></li>
+					<li><a data-href="cardInfo" data-title="一卡通信息" href="javascript:void(0)">一卡通信息</a></li>
 				</ul>
 			</dd>
 		</dl>
 		
+		<shiro:hasAnyRoles name="系统管理员,教师">
 		<dl id="menu-article">
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 人员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a data-href="userList" data-title="人员列表" href="javascript:void(0)">人员列表</a></li>
-					<li><a data-href="roleList" data-title="人员类别" href="javascript:void(0)">人员类别</a></li>
+					<!-- <li><a data-href="roleList" data-title="人员类别" href="javascript:void(0)">人员类别</a></li> -->
 				</ul>
 			</dd>
 		</dl>
+		</shiro:hasAnyRoles>
 		
-		<dl id="menu-article">
+		<shiro:hasAnyRoles name="系统管理员,一卡通管理员">
+		<dl id="menu-article" >
 			<dt><i class="Hui-iconfont">&#xe6b4;</i> 一卡通管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="cardList" data-title="一卡通列表" href="javascript:void(0)">一卡通列表</a></li>				
-					<li><a data-href="" data-title="充值" href="javascript:void(0)">充值</a></li>
-					<li><a data-href="" data-title="挂失" href="javascript:void(0)">挂失</a></li>
+					<li><a data-href="cardList" data-title="一卡通列表" href="javascript:void(0)">一卡通列表</a></li>
+					
+					<li><a data-href="toRecharge" data-title="充值" href="javascript:void(0)">充值</a></li>
+					<li><a data-href="toStopCard" data-title="挂失" href="javascript:void(0)">挂失</a></li>
 				</ul>
 			</dd>
 		</dl>
-		
-		<dl id="menu-admin">
+		</shiro:hasAnyRoles>
+		<dl id="menu-admin" th:if="${role.name} == 系统管理员">
 			<dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="admin-role.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-					<li><a data-href="admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+					<li><a data-href="roleList" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<li><a data-href="permissionList" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+					<!-- <li><a data-href="admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li> -->
 			</ul>
 		</dd>
 	</dl>
@@ -111,7 +117,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="toWelcome"></iframe>
 	</div>
 </div>
 </section>
@@ -159,37 +165,6 @@ function myselfinfo(){
 	});
 }
 
-/*资讯-添加*/
-function article_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*图片-添加*/
-function picture_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*产品-添加*/
-function product_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*用户-添加*/
-function member_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
 
 
 </script> 
